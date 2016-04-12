@@ -75,6 +75,9 @@ class mongodb::backup(
   if $enabled_real {
     include logrotate
 
+    include mongodb::s3backup::backup
+    include mongodb::s3backup::package
+
     @@icinga::passive_check { "check_automongodbbackup-${::hostname}":
       service_description => $service_desc,
       freshness_threshold => $threshold_secs,
